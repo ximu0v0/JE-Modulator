@@ -1,0 +1,10 @@
+{
+  "name": "je-modulator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "半音阶口琴 JE 谱转调器",
+  "scripts": {
+    "test": "node tests/je.test.mjs"
+  }
+}

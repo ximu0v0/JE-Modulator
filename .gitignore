@@ -1,0 +1,26 @@
+# 误存的临时文件
+tests/test
+
+# 本地提交脚本（仅本地使用，不上远程）
+commit.cmd
+
+# 内部设计文档（仅本地保留，不上远程）
+页面设计-JE谱转调器.md
+docs/
+
+# 系统文件
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# Node（当前无依赖，防未来误装后提交）
+node_modules/
+npm-debug.log*
+
+# 日志与临时文件
+*.log
+*.tmp

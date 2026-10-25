@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JE 谱转调器 · 半音阶口琴</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <h1>JE 谱转调器</h1>
+      <p class="lede">半音阶口琴 · 固定调记谱整体移调</p>
+    </header>
+
+    <section class="keybar" aria-label="调性选择">
+      <label class="keyfield">
+        <span>原调</span>
+        <select id="source-key"></select>
+      </label>
+
+      <button id="swap" class="swap" type="button" title="交换原调与目标调" aria-label="交换原调与目标调">⇄</button>
+
+      <label class="keyfield">
+        <span>目标调</span>
+        <select id="target-key"></select>
+      </label>
+
+      <span class="divider" aria-hidden="true"></span>
+
+      <button id="shift-up" class="chip" type="button" title="整份谱再升高 1 个半音">+1 半音</button>
+      <button id="shift-down" class="chip" type="button" title="整份谱再降低 1 个半音">−1 半音</button>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="panes">
+      <section class="pane">
+        <div class="pane-head">
+          <h2>原谱</h2>
+        </div>
+        <textarea id="input" spellcheck="false" autocomplete="off" aria-label="原谱输入"
+          placeholder="在此输入 JE 谱，例如：&#10;1 2 3 #4 5&#10;(6 7) [1 2]"></textarea>
+      </section>
+
+      <section class="pane pane-result">
+        <div class="pane-head">
+          <h2>结果</h2>
+        </div>
+        <textarea id="output" spellcheck="false" readonly aria-label="转调结果"
+          placeholder="转调结果"></textarea>
+      </section>
+    </div>
+
+    <div class="infobar">
+      <span id="range-info">最低音 — · 最高音 —</span>
+      <span class="infobar-result">
+        <span id="range-result">最低音 — · 最高音 —</span>
+        <span id="offset-info">音高不变</span>
+      </span>
+    </div>
+
+    <div class="actions">
+      <button id="example" type="button">示例</button>
+      <button id="clear" type="button">清空</button>
+      <button id="copy" type="button" class="primary">复制结果</button>
+
+      <details class="advanced">
+        <summary>高级</summary>
+        <div class="advanced-body">
+          <label for="spelling">临时记号</label>
+          <select id="spelling">
+            <option value="follow">跟随原谱</option>
+            <option value="sharp">全升号</option>
+            <option value="flat">全降号</option>
+          </select>
+        </div>
+      </details>
+    </div>
+
+    <footer class="foot">
+      <p><strong>固定调模式</strong>：<code>1</code>=C、<code>2</code>=D、<code>3</code>=E、<code>4</code>=F、<code>5</code>=G、<code>6</code>=A、<code>7</code>=B，数字固定对应音名；</p>
+      <p><strong>转换逻辑</strong>：所有音符统一平移半音；<code>( )</code> 低八度、<code>[ ]</code> 高八度、<code># b</code> 升降标记；空格、换行、文字原样保留；</p>
+      <p><strong>+1/−1 半音 </strong>：在目标调的基础上快速叠加微调。</p>
+    </footer>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
