@@ -74,13 +74,17 @@
             <option value="sharp">全升号</option>
             <option value="flat">全降号</option>
           </select>
+          <label class="check" for="merge-brackets">
+            <input type="checkbox" id="merge-brackets">
+            合并相邻同层括号
+          </label>
         </div>
       </details>
     </div>
 
     <footer class="foot">
       <p><strong>固定调模式</strong>：<code>1</code>=C、<code>2</code>=D、<code>3</code>=E、<code>4</code>=F、<code>5</code>=G、<code>6</code>=A、<code>7</code>=B，数字固定对应音名；</p>
-      <p><strong>转换逻辑</strong>：所有音符统一平移半音；<code>( )</code> 低八度、<code>[ ]</code> 高八度、<code># b</code> 升降标记；空格、换行、文字原样保留；</p>
+      <p><strong>转换逻辑</strong>：所有音符统一平移半音；<code>( )</code> 低八度、<code>[ ]</code> 高八度（<code>（ ）</code> 等价 <code>( )</code>，<code>【 】</code> 等价 <code>[ ]</code>）、<code># b</code> 升降标记；空格、换行、文字原样保留；相邻同层括号默认不合并，可在高级区开启；</p>
       <p><strong>+1/−1 半音 </strong>：在目标调的基础上快速叠加微调。</p>
     </footer>
   </main>

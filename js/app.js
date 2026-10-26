@@ -3,6 +3,7 @@ import { KEYS, wrapDelta, convert, pitchRange } from "./je.js";
 const sourceSelect = document.querySelector("#source-key");
 const targetSelect = document.querySelector("#target-key");
 const spellingSelect = document.querySelector("#spelling");
+const mergeEl = document.querySelector("#merge-brackets");
 const inputEl = document.querySelector("#input");
 const outputEl = document.querySelector("#output");
 const statusEl = document.querySelector("#status");
@@ -43,7 +44,7 @@ function render() {
 
   // 固定调记谱：换调即整份谱整体升/降（目标调 − 原调）半音
   const shift = wrapDelta(from, to) + extraShift;
-  const result = convert(inputEl.value, shift, spellingSelect.value);
+  const result = convert(inputEl.value, shift, spellingSelect.value, mergeEl.checked);
 
   outputEl.value = result.text;
   statusEl.textContent = `1=${KEYS[from]} → 1=${KEYS[to]} · 整体 ${formatSigned(shift)} 半音`;
@@ -69,6 +70,7 @@ function resetShiftAndRender() {
 sourceSelect.addEventListener("change", resetShiftAndRender);
 targetSelect.addEventListener("change", resetShiftAndRender);
 spellingSelect.addEventListener("change", render);
+mergeEl.addEventListener("change", render);
 inputEl.addEventListener("input", render);
 
 swapBtn.addEventListener("click", () => {

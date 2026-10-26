@@ -35,9 +35,9 @@ body {
 }
 
 .page {
-  width: min(1060px, calc(100% - 40px));
+  width: min(1560px, calc(100% - 64px));
   margin: 0 auto;
-  padding: 44px 0 56px;
+  padding: 40px 0 56px;
 }
 
 /* ---------- 页头 ---------- */
@@ -206,19 +206,13 @@ textarea:focus-visible {
 textarea {
   flex: 1;
   width: 100%;
-  min-height: 380px;
+  min-height: 560px;
   padding: 16px 18px 22px;
   font-family: var(--mono);
   font-size: 16px;
   line-height: 30px;
   color: var(--ink);
   background-color: transparent;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0 29px,
-    rgba(195, 183, 159, 0.38) 29px 30px
-  );
-  background-position: 0 16px;
   border: 0;
   resize: vertical;
   outline: none;
@@ -344,6 +338,21 @@ button.primary:hover {
 .advanced-body select {
   min-width: 108px;
   font-size: 13.5px;
+}
+
+.advanced-body .check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.advanced-body .check input {
+  accent-color: var(--mint);
+  cursor: pointer;
 }
 
 /* ---------- 页脚 ---------- */

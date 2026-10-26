@@ -83,9 +83,9 @@ const cases = [
     shift: 2,
   },
   {
-    name: "相邻同层括号自动合并（C→C）",
+    name: "默认不合并相邻同层括号（C→C）",
     actual: transpose("[1] [2]", C, C),
-    expected: "[1 2]",
+    expected: "[1] [2]",
     shift: 0,
   },
   {
@@ -93,6 +93,42 @@ const cases = [
     actual: transpose("1 2 3\n歌词 la la | 4", C, C),
     expected: "1 2 3\n歌词 la la | 4",
     shift: 0,
+  },
+  {
+    name: "【 】等价 [ ]（C→C 归一为标准括号）",
+    actual: transpose("【1 2】 3", C, C),
+    expected: "[1 2] 3",
+    shift: 0,
+  },
+  {
+    name: "进位括号不与后续分组共用（C→D 不合并）",
+    actual: transpose("#4#5#6 【#2】【#1】", C, D),
+    expected: "#5#6[1] [4][#2]",
+    shift: 2,
+  },
+  {
+    name: "进位括号与后续分组合并（C→D 开启合并）",
+    actual: transpose("#4#5#6 【#2】【#1】", C, D, "follow", true),
+    expected: "#5#6[1 4#2]",
+    shift: 2,
+  },
+  {
+    name: "嵌套分组闭括号不破坏外层（不合并）",
+    actual: transpose("【1 [3] 5】", C, CS),
+    expected: "[#1 [4] #5]",
+    shift: 1,
+  },
+  {
+    name: "全角括号（ ）等价 ( )（C→#C）",
+    actual: transpose("（1）", C, CS),
+    expected: "(#1)",
+    shift: 1,
+  },
+  {
+    name: "全角半角括号混用整行（C→D）",
+    actual: transpose("(#4)(#5)(#6)(#4) #2#1#2（#4）#3#2#3", C, D),
+    expected: "(#5)(#6)1(#5) 4#24(#5)545",
+    shift: 2,
   },
 ];
 
@@ -123,11 +159,27 @@ try {
   console.error(`      ${error.message}`);
 }
 
+// ---------- merge：合并相邻同层括号（默认关闭） ----------
+
+try {
+  assert.equal(transpose("[1] [2]", C, C, "follow", true).text, "[1 2]", "开启后合并");
+  assert.equal(transpose("[1] [2]", C, C, "follow", false).text, "[1] [2]", "关闭时保留分组");
+  assert.equal(transpose("(1) (2)", C, C, "follow", true).text, "(1 2)", "低八度同样合并");
+  assert.equal(transpose("【1】 【2】", C, C, "follow", true).text, "[1 2]", "【 】分组也可合并");
+  console.log("  ok  merge 开关控制括号合并");
+} catch (error) {
+  failed += 1;
+  console.error("FAIL  merge 开关控制括号合并");
+  console.error(`      ${error.message}`);
+}
+
 // ---------- pitchRange：固定调音域 ----------
 
 try {
   assert.deepEqual(pitchRange("(1) 5 [3]"), { min: "(1)", max: "[3]" });
   assert.deepEqual(pitchRange("145"), { min: "1", max: "5" });
+  assert.deepEqual(pitchRange("5 【3】"), { min: "5", max: "[3]" }, "【 】参与音域统计");
+  assert.deepEqual(pitchRange("（1） 5"), { min: "(1)", max: "5" }, "（ ）参与音域统计");
   assert.equal(pitchRange("没有音符"), null);
   console.log("  ok  pitchRange 最低/最高音");
 } catch (error) {
